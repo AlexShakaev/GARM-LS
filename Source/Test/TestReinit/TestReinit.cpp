@@ -222,18 +222,18 @@ int main(int argc, char *argv[])
 		writeFrame(phi, output, 1);
 		std::cout << std::format("Error: {:.6e}", computeError(phi, sdf, number)) << std::endl;
 	}
-	else if (mode == "upwind" || mode == "eno" || mode == "weno") {
-		for (uint i = 1; i < end; i++) {
-			std::cout << std::format("[{:>4}] Reinitialize iteratively by {} scheme... ", i, mode) << std::flush;
+	// else if (mode == "upwind" || mode == "eno" || mode == "weno") {
+	// 	for (uint i = 1; i < end; i++) {
+	// 		std::cout << std::format("[{:>4}] Reinitialize iteratively by {} scheme... ", i, mode) << std::flush;
 
-			if (mode == "upwind") Reinitialization::solve<1>(phi, 1, cfl);
-			else if (mode == "eno") Reinitialization::solve<3>(phi, 1, cfl);
-			else Reinitialization::solve<5>(phi, 1, cfl);
+	// 		if (mode == "upwind") Reinitialization::solve<1>(phi, 1, cfl);
+	// 		else if (mode == "eno") Reinitialization::solve<3>(phi, 1, cfl);
+	// 		else Reinitialization::solve<5>(phi, 1, cfl);
 
-			writeFrame(phi, output, i);
-			std::cout << std::format("Error: {:.6e}", computeError(phi, sdf, number)) << std::endl;
-		}
-	}
+	// 		writeFrame(phi, output, i);
+	// 		std::cout << std::format("Error: {:.6e}", computeError(phi, sdf, number)) << std::endl;
+	//	}
+    //	} 
 	else if (mode == "gal-newton") {
 		std::cout << std::format("[{:>4}] Reinitialize interface cells by {} scheme... ", 1, mode) << std::flush;
 		HybridNewton<2> galNewton(sGrid.cellGrid);
@@ -248,16 +248,16 @@ int main(int argc, char *argv[])
 			std::cout << std::format("Error: {:.6e}", computeError(phi, sdf, number)) << std::endl;
 		}
 	}
-	else if (mode == "lambda-corr") {
-		LambdaCorr<2, 5> lambdaCorr(sGrid.cellGrid);
-		for (uint i = 1; i < end; i++) {
-			std::cout << std::format("[{:>4}] Reinitialize iteratively by {} scheme... ", i, mode) << std::flush;
+	// else if (mode == "lambda-corr") {
+	// 	LambdaCorr<2, 5> lambdaCorr(sGrid.cellGrid);
+	// 	for (uint i = 1; i < end; i++) {
+	// 		std::cout << std::format("[{:>4}] Reinitialize iteratively by {} scheme... ", i, mode) << std::flush;
 
-			lambdaCorr.perform(phi, 1, cfl);
-			writeFrame(phi, output, i);
-			std::cout << std::format("Error: {:.6e}", computeError(phi, sdf, number)) << std::endl;
-		}
-	}
+	// 		lambdaCorr.perform(phi, 1, cfl);
+	// 		writeFrame(phi, output, i);
+	// 		std::cout << std::format("Error: {:.6e}", computeError(phi, sdf, number)) << std::endl;
+	// 	}
+	// }
 	else {
 		std::cerr << "Error: [main] encountered invalid mode." << std::endl;
 		std::exit(-1);

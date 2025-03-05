@@ -458,18 +458,18 @@ int main(int argc, char *argv[])
 					phiViewHermite.reset();
 					phiView1Hermite.reset();
 				}
-				if (mode == "hfmm" && i % 10 == 1) {
-					Reinitialization::solve<5>(curPhi, 50);
-					Derivatives::computeFirst<2>(curPhi, curPsi);
-					parallelForEach(sGrid.cellGrid, [&](const Vector3i &cell) {
-						phi[cell] = curPhi[cell];
-						psi[cell] = curPsi[cell];
-						xi[cell] = sGrid.cellCenter(cell);
-						pi[cell] = Matrix3d::Identity();
-					});
-					phiViewHermite.reset();
-					phiView1Hermite.reset();
-				}
+				// if (mode == "hfmm" && i % 10 == 1) {
+				// 	Reinitialization::solve<5>(curPhi, 50);
+				// 	Derivatives::computeFirst<2>(curPhi, curPsi);
+				// 	parallelForEach(sGrid.cellGrid, [&](const Vector3i &cell) {
+				// 		phi[cell] = curPhi[cell];
+				// 		psi[cell] = curPsi[cell];
+				// 		xi[cell] = sGrid.cellCenter(cell);
+				// 		pi[cell] = Matrix3d::Identity();
+				// 	});
+				// 	phiViewHermite.reset();
+				// 	phiView1Hermite.reset();
+				// }
 				Refine::fill(refinePhi, phiView1Hermite);
 			}
 
