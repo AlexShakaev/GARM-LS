@@ -1434,7 +1434,7 @@ void LevelSetLiquid<Dim>::reradiusParticles() {
 
 #endif
 
-template class LevelSetLiquid<2>;
-template class LevelSetLiquid<3>;
+template class LevelSetLiquid<static_cast<unsigned int>(2)>;
+template class LevelSetLiquid<static_cast<unsigned int>(3)>;
 
 }

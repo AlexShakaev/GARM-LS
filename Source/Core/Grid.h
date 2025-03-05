@@ -106,7 +106,7 @@ inline void parallelForEach(const Grid<Dim> &grid, const Func func)
 
 template <int Dim, typename Func>
 	requires std::is_convertible_v<Func, std::function<void(const int, const Vector<Dim, int> &)>>
-inline void forEach(const std::array<Grid<Dim>, Dim> &grids, const Func func)
+inline void forEach(const std::array<Grid<Dim>, static_cast<int>(Dim)> &grids, const Func func)
 {
 	for (int axis = 0; axis < Dim; axis++)
 		forEach(grids[axis], std::bind(func, axis, std::placeholders::_1));
@@ -114,7 +114,7 @@ inline void forEach(const std::array<Grid<Dim>, Dim> &grids, const Func func)
 
 template <int Dim, typename Func>
 	requires std::is_convertible_v<Func, std::function<void(const int, const Vector<Dim, int> &)>>
-inline void parallelForEach(const std::array<Grid<Dim>, Dim> &grids, const Func func)
+inline void parallelForEach(const std::array<Grid<Dim>, static_cast<int>(Dim)> &grids, const Func func)
 {
 	for (int axis = 0; axis < Dim; axis++)
 		parallelForEach<Dim>(grids[axis], std::bind(func, axis, std::placeholders::_1));
